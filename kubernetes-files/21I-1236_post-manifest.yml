@@ -1,23 +1,23 @@
-# auth-deployment.yaml
+# post-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-deployment
+  name: post-deployment
   labels:
-    app: auth
+    app: post
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: post
   template:
     metadata:
       labels:
-        app: auth
+        app: post
     spec:
       containers:
-      - name: auth
-        image: tauseefrazaq/auth:latest
+      - name: post
+        image: tauseefrazaq/post:latest
         ports:
         - containerPort: 3236
         # Add your environment variables here
@@ -25,15 +25,15 @@ spec:
         # - name: ENV_VAR_NAME
         #   value: "ENV_VAR_VALUE"
 ---
-# auth-service.yaml
+# post-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: post-service
 spec:
   selector:
-    app: auth
+    app: post
   ports:
     - protocol: TCP
-      port: 3236
-      targetPort: 3236
+      port: 3239
+      targetPort: 3239

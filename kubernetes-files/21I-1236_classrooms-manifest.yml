@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-deployment
+  name: classrooms-deployment
   labels:
-    app: auth
+    app: classrooms
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: classrooms
   template:
     metadata:
       labels:
-        app: auth
+        app: classrooms
     spec:
       containers:
-      - name: auth
-        image: tauseefrazaq/auth:latest
+      - name: classrooms
+        image: tauseefrazaq/classrooms:latest
         ports:
         - containerPort: 3236
         # Add your environment variables here
@@ -25,15 +25,15 @@ spec:
         # - name: ENV_VAR_NAME
         #   value: "ENV_VAR_VALUE"
 ---
-# auth-service.yaml
+# classrooms-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: classrooms-service
 spec:
   selector:
-    app: auth
+    app: classrooms
   ports:
     - protocol: TCP
-      port: 3236
-      targetPort: 3236
+      port: 3237
+      targetPort: 3237

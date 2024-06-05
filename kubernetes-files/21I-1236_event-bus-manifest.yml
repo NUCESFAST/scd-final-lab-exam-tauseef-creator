@@ -1,23 +1,23 @@
-# auth-deployment.yaml
+# event-bus-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-deployment
+  name: event-bus-deployment
   labels:
-    app: auth
+    app: event-bus
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: event-bus
   template:
     metadata:
       labels:
-        app: auth
+        app: event-bus
     spec:
       containers:
-      - name: auth
-        image: tauseefrazaq/auth:latest
+      - name: event-bus
+        image: tauseefrazaq/event-bus:latest
         ports:
         - containerPort: 3236
         # Add your environment variables here
@@ -25,15 +25,15 @@ spec:
         # - name: ENV_VAR_NAME
         #   value: "ENV_VAR_VALUE"
 ---
-# auth-service.yaml
+# event-bus-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: event-bus-service
 spec:
   selector:
-    app: auth
+    app: event-bus
   ports:
     - protocol: TCP
-      port: 3236
-      targetPort: 3236
+      port: 3238
+      targetPort: 3238
