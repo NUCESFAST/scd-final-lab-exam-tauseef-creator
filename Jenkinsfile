@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        AUTH_PORT = '3236'
-        CLASSROOMS_PORT = '3237'
-        CLIENT_PORT = '80'
-        EVENT_BUS_PORT = '3238'
-        POST_PORT = '3239'
+        AUTH = '3236'
+        CLASSROOMS = '3237'
+        CLIENT = '80'
+        EVENT_BUS = '3238'
+        POST = '3239'
     }
 
     stages {
@@ -43,7 +43,7 @@ pipeline {
                 script {
                     // Run and test each service
                     def services = ['auth', 'classrooms', 'client', 'event-bus', 'post']
-                    def ports = [AUTH_PORT, CLASSROOMS_PORT, CLIENT_PORT, EVENT_BUS_PORT, POST_PORT]
+                    def ports = [AUTH, CLASSROOMS, CLIENT, EVENT_BUS, POST]
                     for (int i = 0; i < services.size(); i++) {
                         sh "docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} tauseefrazaq/${services[i]}"
                         sh 'sleep 10' // Give the app some time to start
