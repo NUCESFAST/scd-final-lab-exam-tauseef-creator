@@ -46,8 +46,8 @@ pipeline {
                     def ports = [AUTH, CLASSROOMS, CLIENT, EVENT_BUS, POST]
                     for (int i = 0; i < services.size(); i++) {
                         sh "docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} tauseefrazaq/${services[i]}"
-                        sh 'sleep 10' // Give the app some time to start
-                        // Replace this with an actual test command for your application
+                        sh 'sleep 10'
+                        //testing
                         sh "curl localhost:${ports[i]}"
                         sh "docker stop ${services[i]}"
                     }
