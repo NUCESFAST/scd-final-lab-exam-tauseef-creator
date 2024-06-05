@@ -1,0 +1,21 @@
+service docker stop                                                                                                            ─╯
+rm ~/.docker/config.json    
+service docker start
+
+dockekr login
+
+docker context use desktop-linux
+
+kubectl -n kubernetes-dashboard create token admin-user
+
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
+
+kubectl apply -f simple-pod.yaml
+
+docker build -t sampleapp:v1.
+
+docker run -d sampleapp:v1
+docker run -d --name episode-01--backend -p 8000:8000 --link my-mongodb-container:mongodb -e MONGO_HOST=mongodb -e MONGO_PORT=27017 episode-01:backend
+
+
+

@@ -1,0 +1,46 @@
+version: '3'
+services:
+  auth:
+    build:
+      context: ./Auth
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+
+  classrooms:
+    build:
+      context: ./Classrooms
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
+
+  post:
+    build:
+      context: ./Post
+      dockerfile: Dockerfile
+    ports:
+      - "4002:4002"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+
+  event-bus:
+    build:
+      context: ./event-bus
+      dockerfile: Dockerfile
+    ports:
+      - "4009:4009"
+  
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:

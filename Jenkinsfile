@@ -19,7 +19,7 @@ pipeline {
         stage('21I-1236 - Build and Push Docker images') {
             steps {
                 script {
-                    def services = ['Auth', 'Classrooms', 'client', 'event-bus', 'Post']
+                    def services = ['auth', 'classrooms', 'client', 'event-bus', 'post']
                     for (service in services) {
                         dir(service) {
                             // Install dependencies
@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Run and test each service
-                    def services = ['Auth', 'Classrooms', 'client', 'event-bus', 'Post']
+                    def services = ['auth', 'classrooms', 'client', 'event-bus', 'post']
                     def ports = [AUTH_PORT, CLASSROOMS_PORT, CLIENT_PORT, EVENT_BUS_PORT, POST_PORT]
                     for (int i = 0; i < services.size(); i++) {
                         sh "docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} tauseefrazaq/${services[i]}"
