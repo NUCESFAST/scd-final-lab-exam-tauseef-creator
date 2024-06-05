@@ -15,7 +15,10 @@ const Posts = () => {
 
   const createPost = async (e) => {
     e.preventDefault();
-    const res = await axios.post('http://localhost:4002/create_post', { classId, postTitle });
+    const res = await axios.post(
+			process.env.REACT_APP_POST_URL + "/create_post" || "http://localhost:4002/create_post",
+			{ classId, postTitle }
+		);
     setPosts(res.data);
     setPostTitle("");
 
@@ -33,11 +36,11 @@ const Posts = () => {
     setComments(comments);
 
     // make add_comment axios request here
-    await axios.post('http://localhost:4002/add_comment', {
-      id: postId,
-      class: classId,
-      text: comments[postId]
-    });
+    await axios.post(process.env.REACT_APP_POST_URL + "/add_comment" || "http://localhost:4002/add_comment", {
+			id: postId,
+			class: classId,
+			text: comments[postId],
+		});
   }
 
   const renderComments = (commentArr) => {
@@ -80,7 +83,7 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get('http://localhost:4002/get_posts/' + classId);
+      const res = await axios.get(process.env.REACT_APP_POST_URL + '/get_posts' || 'http://localhost:4002/get_posts/' + classId);
       setPosts(res.data);
     };
     

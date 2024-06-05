@@ -23,14 +23,18 @@ const Auth = (props) => {
   const tryLogin = async (e) => {
     e.preventDefault();
 
-    await axios.post('http://localhost:4000/login', {
-      email, password
-    }).then((res) => {
-      cookie.save('userId', res.data, { path: '/' })
-      history.push({pathname: '/home'});
-    }).catch((err) => {
-      console.log(err);
-    });
+    await axios
+			.post(process.env.REACT_APP_AUTH_URL + "/login" || "http://localhost:4000/login", {
+				email,
+				password,
+			})
+			.then((res) => {
+				cookie.save("userId", res.data, { path: "/" });
+				history.push({ pathname: "/home" });
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 
     setEmail("");
     setPassword("");
@@ -39,7 +43,7 @@ const Auth = (props) => {
   const trySignup = async (e) => {
     e.preventDefault();
 
-    await axios.post('http://localhost:4000/signup', {
+    await axios.post(process.env.REACT_APP_AUTH_URL + '/signup' || 'http://localhost:4000/signup', {
       email, username, password
     }).then((res) => {
       history.push('/login');

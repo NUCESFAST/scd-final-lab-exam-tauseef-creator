@@ -5,13 +5,14 @@ const { randomBytes } = require('crypto');
 const axios = require('axios');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
+require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-var url = 'mongodb://localhost:27017/';
+var url = process.env.MONGO_URL;
 
 app.post('/create_class', async (req, res) => {
     const classId = randomBytes(3).toString('hex');
@@ -41,10 +42,10 @@ app.post('/create_class', async (req, res) => {
         db.close();
     });
 
-    await axios.post('http://localhost:4009/events', {
-        type: 'ClassCreated',
-        data: classId
-    });
+    await axios.post(process.env.EVENT_BUS_URL || "http://localhost:4009/events", {
+			type: "ClassCreated",
+			data: classId,
+		});
 
     res.status(201).send('Class created');
 });
@@ -120,6 +121,6 @@ app.post('/events', async (req, res) => {
 });
 
 
-app.listen(4001, () => {
-    console.log('Classroom service listening at port 4001...');
+app.listen(process.env.PORT || 4001, () => {
+    console.log("Classroom service listening at port 4001...", process.env.PORT || 4001);
 })

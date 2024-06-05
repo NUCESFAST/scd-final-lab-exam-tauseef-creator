@@ -9,8 +9,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+require("dotenv").config();
 
-var url = 'mongodb://localhost:27017'
+var url = process.env.MONGO_URL;
 
 app.post('/create_post', async (req, res) => {
     const id = randomBytes(6).toString('hex');
@@ -29,10 +30,10 @@ app.post('/create_post', async (req, res) => {
         db.close();
     });
 
-    await axios.post('http://localhost:4009/events', {
-        type: 'PostCreated',
-        data: 'postid'
-    });
+    await axios.post(process.env.EVENT_BUS_URL || "http://localhost:4009/events", {
+			type: "PostCreated",
+			data: "postid",
+		});
 
     await MongoClient.connect(url, (err, db) => {
         if (err) throw err;
@@ -101,6 +102,6 @@ app.post('/events', async (req, res) => {
 })
 
 
-app.listen(4002, () => {
-    console.log('Post service listening on port 4002...');
+app.listen(process.env.PORT || 4002, () => {
+    console.log("Post service listening on port 4002...", process.env.PORT || 4002);
 })

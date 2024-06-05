@@ -4,13 +4,14 @@ const { randomBytes, sign } = require('crypto');
 const axios = require('axios');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
+require('dotenv').config()
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-var url = 'mongodb://localhost:27017/';
+var url = process.env.MONGO_URL;
 
 app.post('/signup', async (req, res) => {
     const id = randomBytes(4).toString('hex');
@@ -34,7 +35,7 @@ app.post('/signup', async (req, res) => {
         });
     });
 
-    await axios.post('http://localhost:4009/events', {
+    await axios.post(process.env.EVENT_BUS_URL || 'http://localhost:4009/events', {
         type: 'UserCreated',
         data: {
             id, email
@@ -74,6 +75,6 @@ app.post('/events', (req, res) => {
   res.send({});
 })
 
-app.listen(4000, () => {
-    console.log('Authentication Server listening at port 4000...');
+app.listen(process.env.PORT || 4000, () => {
+    console.log('Authentication Server listening at port 4000...', process.env.PORT || 4000);
 })
