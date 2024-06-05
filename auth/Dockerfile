@@ -15,4 +15,4 @@ ENV PORT=3236
 ENV MONGO_URL=mongodb://mongodb:27017/auth
 
 # Run app.py when the container launches
-CMD ["node", ".index.js"]
+CMD ["node", "index.js"]
