@@ -2,7 +2,7 @@
 FROM node:20.13.1-alpine3.19
 
 # Set the working directory in the container
-WORKDIR /21I-1236_Classrooms
+WORKDIR /21I-1236_backend_Classrooms
 
 # Copy the current directory contents into the container at /usr/src/app
 COPY package*.json ./
